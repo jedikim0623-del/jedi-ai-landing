@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제디샘 AI 스마트워크 마스터클래스</title>
+    <!-- 구글 웹 폰트 로드: 세련된 서체 환경 정의 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 아이콘 로드 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* CSS Reset 및 현대적인 변수 정의 */
+        :root {
+            --bg-main: #090d16;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-teal: #0d9488;
+            --accent-teal-glow: rgba(13, 148, 136, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-english: 'Plus Jakarta Sans', sans-serif;
+            --font-korean: 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-korean);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* 구글 사이트 도구 임베드 프레임 내부에서 스크롤을 방지하고 깔끔하게 감싸기 위한 컨테이너 */
+        .landing-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: radial-gradient(circle at 50% -20%, rgba(13, 148, 136, 0.15) 0%, transparent 50%);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* 배경 불빛(Glow) 효과 추가 */
+        .landing-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            right: -5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .landing-wrapper > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 1. HERO SECTION */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1.12fr 0.88fr;
+            gap: 40px;
+            align-items: center;
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-english);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text h1 span {
+            color: var(--accent-teal);
+            -webkit-text-fill-color: initial;
+            background: none;
+        }
+
+        .hero-text p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Vercel 시그니처 버튼 스타일링 */
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-teal);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-teal-glow);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: #0f766e;
+            box-shadow: 0 0 30px rgba(13, 148, 136, 0.6);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .img-container {
+            width: 100%;
+            max-width: 440px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image .img-container:hover {
+            transform: scale(1.02);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 2. VALUE GRID (핵심 혜택 컴포넌트) */
+        .grid-section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(13, 148, 136, 0.4);
+            background: rgba(17, 24, 39, 0.9);
+            box-shadow: 0 10px 30px -10px rgba(13, 148, 136, 0.15);
+        }
+
+        .value-card .icon-box {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(13, 148, 136, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+            font-size: 22px;
+            border: 1px solid rgba(13, 148, 136, 0.2);
+        }
+
+        .value-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* 3. TRUST & METRICS (신뢰 수치 데이터) */
+        .metrics-section {
+            padding: 50px 0;
+            background: linear-gradient(90deg, rgba(13, 148, 136, 0.05) 0%, rgba(13, 148, 136, 0) 100%);
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-number {
+            font-family: var(--font-english);
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 800;
+            color: var(--accent-teal);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* 4. CALL TO ACTION / FORM (신청 영역) */
+        .cta-section {
+            padding-top: 60px;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.1), transparent 60%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            border-radius: 24px;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cta-box h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 35px;
+            font-size: 16px;
+        }
+
+        /* 반응형 레이아웃 대응 */
+        @media (max-width: 968px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-group {
+                justify-content: center;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .landing-wrapper {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-wrapper">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-text">
+                <h1>제디샘의 <span>AI 캔버스 & 스마트워크</span> 프리미엄 마스터클래스</h1>
+                <p>AI 바이브코딩부터 노션 포트폴리오, 구글 생태계의 완전 연동까지! 번거로운 웹 서버 비용 지불 없이 전 세계 어디서나 고성능으로 작동하는 초고화질 반응형 비즈니스 랜딩페이지를 직접 론칭해 보세요.</p>
+                <div class="cta-group">
+                    <!-- 구글 폼(Google Forms) 또는 노션 상담 양식 등 원하는 링크 입력 공간 -->
+                    <a href="https://forms.google.com" target="_blank" class="btn btn-primary">
+                        <i class="fa-solid fa-rocket"></i> 지금 즉시 무료 상담 예약
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        커리큘럼 탐색 <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="img-container">
+                    <!-- 구글 검색을 통해 사전 확보된 최상급 웹 디자인 목업 일러스트 연동 -->
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/6421364391527858001_0" alt="제디샘 스마트워크 웹 목업 이미지">
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Grid Section -->
+        <section class="grid-section" id="features">
+            <div class="section-header">
+                <h2>왜 제디샘의 교육 솔루션이어야 할까요?</h2>
+                <p>단순한 개념 이해를 넘어, 비즈니스에 즉각 도입할 수 있는 실전 성과형 파이프라인을 구축합니다.</p>
+            </div>
+            <div class="card-grid">
+                <!-- 1번 특장점 카드 -->
+                <div class="value-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3>AI 바이브코딩 마스터</h3>
+                    <p>코딩 한 줄 모르는 초보자도 구글 Gemini Canvas 환경과 프롬프트를 통해 Vercel급 인터랙티브 웹 디자인 결과물을 단 10분 만에 도출해 냅니다.</p>
+                </div>
+                <!-- 2번 특장점 카드 -->
+                <div class="value-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h3>구글 생태계 유기적 연동</h3>
+                    <p>구글 사이트 도구(Google Sites)의 무한 트래픽 정적 서버를 기반으로 구글 폼, 스프레드시트 DB 연동 등 올인원 데이터 수집 구조를 설계합니다.</p>
+                </div>
+                <!-- 3번 특장점 카드 -->
+                <div class="value-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3>무비용 평생 서버 배포</h3>
+                    <p>매월 빠져나가는 호스팅 및 대역폭 비용 청구는 이제 끝입니다. 구글 클라우드가 제공하는 전용 인프라 위에 도메인을 장착하여 0원 배포를 완료합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Metrics Section -->
+        <section class="metrics-section">
+            <div class="metric-item">
+                <div class="metric-number">3,500+</div>
+                <div class="metric-label">누적 졸업생 수</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-number">4.9 / 5.0</div>
+                <div class="metric-label">강의 평균 만족도</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-number">100%</div>
+                <div class="metric-label">즉시 실행 가능한 실무 코드 제공</div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-box">
+                <h2>비즈니스의 판도를 바꾸는 AI 전환, 지금 시작하세요</h2>
+                <p>바이브코딩 및 스마트워크 마스터클래스 무료 상담 또는 사전 대기 신청을 진행 중입니다. 아래 예약 버튼을 통해 제디샘의 밀착 멘토링 혜택을 선점하세요.</p>
+                <!-- 실제 수강 신청이나 문의 폼으로 넘어가도록 편리하게 연결되는 인터랙티브 버튼 -->
+                <a href="https://forms.google.com" target="_blank" class="btn btn-primary" style="padding: 16px 40px; font-size: 18px;">
+                    <i class="fa-solid fa-calendar-check"></i> 선착순 사전등록 신청서 작성하기
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
